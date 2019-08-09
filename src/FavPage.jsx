@@ -5,26 +5,8 @@ const EpisodesList = React.lazy(()=>import('./EpisodesList'));
 
 
 const FavPage = () => {
-    const {state, dispatch} = React.useContext(StoreContext);
+    const {state, dispatch, toggleFavAction} = React.useContext(StoreContext);
     
-    const toggleFavAction = episode => {
-        const episodeInFavorites = state.favourites.includes(episode);
-        let dispatchObj = {
-            type: 'ADD_FAV',
-            payload: episode
-        };
-        
-        if(episodeInFavorites) {
-            const favouritesWithoutEpisode = state.favourites.filter(fav => fav.id !== episode.id)
-            dispatchObj = {
-                type: 'REMOVE_FAV',
-                payload: favouritesWithoutEpisode
-            };
-        }
-        
-        return dispatch(dispatchObj);
-    }
-
     const favEpisodesListProps = {
         episodes: state.favourites,
         toggleFavAction: toggleFavAction,
