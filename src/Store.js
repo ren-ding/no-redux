@@ -8,8 +8,6 @@ const initialState = {
     favourites: []
 }
 
-
-
 export const StoreProvider = (props) => {
     const [state, dispatch] = React.useReducer(reducer, initialState);
     const value = { state, dispatch };
