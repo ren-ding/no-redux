@@ -5,7 +5,7 @@ const EpisodesList = React.lazy(()=>import('./EpisodesList'));
 
 
 const FavPage = () => {
-    const {state, dispatch, toggleFavAction} = React.useContext(StoreContext);
+    const {state, toggleFavAction} = React.useContext(StoreContext);
     
     const favEpisodesListProps = {
         episodes: state.favourites,
