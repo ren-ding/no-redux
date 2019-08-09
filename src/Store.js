@@ -8,18 +8,18 @@ const initialState = {
     favourites: []
 }
 
-export const StoreProvider = (props) => {
-    const [state, dispatch] = React.useReducer(reducer, initialState);
+const toggleFavAction = (dispatch, state) =>
+    episode => {
+        const {favourites} = state;
 
-    const toggleFavAction = episode => {
-        const episodeInFavorites = state.favourites.includes(episode);
+        const episodeInFavorites = favourites.includes(episode);
         let dispatchObj = {
             type: 'ADD_FAV',
             payload: episode
         };
         
         if(episodeInFavorites) {
-            const favouritesWithoutEpisode = state.favourites.filter(fav => fav.id !== episode.id)
+            const favouritesWithoutEpisode = favourites.filter(fav => fav.id !== episode.id)
             dispatchObj = {
             type: 'REMOVE_FAV',
             payload: favouritesWithoutEpisode
@@ -27,9 +27,16 @@ export const StoreProvider = (props) => {
         }
         
         return dispatch(dispatchObj);
-    }
+    }   
 
-    const value = { state, dispatch, toggleFavAction };
+export const StoreProvider = (props) => {
+    const [state, dispatch] = React.useReducer(reducer, initialState);
+
+    const value = { 
+        state, 
+        dispatch, 
+        toggleFavAction: toggleFavAction(dispatch,state) 
+    };
 
     return <StoreContext.Provider value={value}>
             {props.children}
